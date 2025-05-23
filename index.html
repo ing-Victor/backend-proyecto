@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <style>
+        .form-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Victor Gonzalez</h2>
+
+        <!-- <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required> -->
+
+        <label for="email">Correo Electronico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Contrasena:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Registrarse" onclick="register()">
+    </div>
+
+    <div class="form-container">
+        <h2>Victor Gonzalez</h2>
+
+        <!-- <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required> -->
+
+        <label for="email">Correo Electronico:</label>
+        <input type="email" id="emaill" name="emaill" required>
+
+        <label for="password">Contrasena:</label>
+        <input type="password" id="passwordl" name="passwordl" required>
+
+        <input type="submit" value="Login" onclick="login()">
+    </div>
+
+    <script>
+    async function register(){
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        const text = await response.text();
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.warn("La respuesta no es JSON:", text);
+        }
+
+        //console.log("Respuesta del servidor:", data);
+        //alert(data.message || "Registro exitoso");
+
+    } catch (error) {
+        console.error("Error al hacer fetch:", error);
+        alert("Error de red o servidor");
+    }
+}
+
+    </script>
+
+    <script>
+    async function login(){
+    const email = document.getElementById('emaill').value;
+    const password = document.getElementById('passwordl').value;
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        const text = await response.text();
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.warn("La respuesta no es JSON:", text);
+        }
+
+        console.log("Respuesta del servidor:", data);
+        alert(data.message || "Login exitoso");
+
+    } catch (error) {
+        console.error("Error al hacer fetch:", error);
+        alert("Error de red o servidor");
+    }
+}
+
+    </script>
+
+</body>
+
+</html>
