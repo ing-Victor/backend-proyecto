@@ -64,6 +64,7 @@ def read():
     a = 1
     b = 2
     c = a+b
+    # Hola Mundo
     return {"message": "holas desde Fast API...", "suma": c}
 
 @app.post("/register")
